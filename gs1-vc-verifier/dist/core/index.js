@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.verifyVP = exports.verifyVC = exports.checkRevocationStatus = exports.validateCredential = void 0;
+// export { verifySignature } from './signature';
+var schema_1 = require("./schema");
+Object.defineProperty(exports, "validateCredential", { enumerable: true, get: function () { return schema_1.validateCredential; } });
+var revocation_1 = require("./revocation");
+Object.defineProperty(exports, "checkRevocationStatus", { enumerable: true, get: function () { return revocation_1.checkRevocationStatus; } });
+var vcVerifier_1 = require("./vcVerifier");
+Object.defineProperty(exports, "verifyVC", { enumerable: true, get: function () { return vcVerifier_1.verifyVC; } });
+var vpVerifier_1 = require("./vpVerifier");
+Object.defineProperty(exports, "verifyVP", { enumerable: true, get: function () { return vpVerifier_1.verifyVP; } });
