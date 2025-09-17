@@ -1,0 +1,206 @@
+{
+  "$id": "GS1-Prefix8-Schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "title": "GS18PrefixLicenseCredential",
+  "description": "A GS1 GTIN-8 Prefix License Credential issued by GS1 Global Office to Member Organizations for issuing GTIN-8 keys. This credential authorizes the MO to issue individual GTIN-8 licenses.",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "array",
+      "readOnly": true,
+      "const": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://ref.gs1.org/gs1/vc/license-context"
+      ],
+      "default": [
+        "https://www.w3.org/ns/credentials/v2",
+        "https://ref.gs1.org/gs1/vc/license-context"
+      ],
+      "items": {
+        "type": "string",
+        "enum": [
+          "https://www.w3.org/ns/credentials/v2",
+          "https://ref.gs1.org/gs1/vc/license-context"
+        ]
+      }
+    },
+    "type": {
+      "type": "array",
+      "readOnly": true,
+      "const": [
+        "VerifiableCredential",
+        "GS18PrefixLicenseCredential"
+      ],
+      "default": [
+        "VerifiableCredential",
+        "GS18PrefixLicenseCredential"
+      ],
+      "items": {
+        "type": "string",
+        "enum": [
+          "VerifiableCredential",
+          "GS18PrefixLicenseCredential"
+        ]
+      }
+    },
+    "id": {
+      "type": "string",
+      "format": "uri"
+    },
+    "issuer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^did:web:.*$|^did:webvh:.*$"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": ["id", "name"],
+      "additionalProperties": false
+    },
+    "validFrom": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "credentialSubject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uri"
+        },
+        "organization": {
+          "type": "object",
+          "properties": {
+            "gs1:partyGLN": {
+              "type": "string",
+              "pattern": "^[0-9]{13}$"
+            },
+            "gs1:organizationName": {
+              "type": "string"
+            }
+          },
+          "required": ["gs1:partyGLN", "gs1:organizationName"],
+          "additionalProperties": false
+        },
+        "licenseValue": {
+          "type": "string",
+          "pattern": "^[0-9]{2,7}$"
+        },
+        "alternativeLicenseValue": {
+          "type": "string",
+          "pattern": "^[0-9]+$"
+        }
+      },
+      "required": ["id", "organization", "licenseValue"],
+      "additionalProperties": false
+    },
+    "credentialSchema": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "Credential Schema Identifier",
+          "type": "string",
+          "format": "uri",
+          "const": "https://id.gs1.org/vc/schema/v1/prefix8"
+        },
+        "type": {
+          "title": "Credential Schema Type",
+          "const": "JsonSchema"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "type"
+      ]
+    },
+    "credentialStatus": {
+      "type": "object",
+      "description": "Revocation supported.",
+      "properties": {
+        "id": {
+          "title": "Credential Status",
+          "type": "string",
+          "format": "uri"
+        },
+        "type": {
+          "type": "string",
+          "const": "BitstringStatusListEntry"
+        },
+        "statusPurpose": {
+          "type": "string",
+          "const": "revocation"
+        },
+        "statusListIndex": {
+          "type": "string"
+        },
+        "statusSize": {
+          "type": "number"
+        },
+        "statusListCredential": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "statusPurpose",
+        "statusListIndex",
+        "statusSize",
+        "statusListCredential"
+      ],
+      "additionalProperties": false
+    },
+    "renderMethod": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uri"
+          },
+          "type": {
+            "type": "string",
+            "const": "SvgRenderingTemplate"
+          },
+          "name": {
+            "type": "string"
+          },
+          "css3MediaQuery": {
+            "type": "string"
+          }
+        },
+        "required": ["id", "type", "name"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "@context",
+    "type",
+    "id",
+    "issuer",
+    "validFrom",
+    "name",
+    "description",
+    "credentialSubject",
+    "credentialSchema",
+    "credentialStatus",
+    "renderMethod"
+  ],
+  "additionalProperties": false
+} 

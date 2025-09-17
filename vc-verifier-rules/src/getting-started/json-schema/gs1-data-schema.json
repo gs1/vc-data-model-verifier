@@ -1,0 +1,79 @@
+{
+  "$id": "GS1-Data-Schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "version": "1.0.0",
+  "title": "DataCredential",
+  "description": "Base GS1 Data Credential. Declares facts about a GS1 ID Key; may be extended for product/organization/custom data.",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "array",
+      "readOnly": true,
+      "items": { "type": "string" }
+    },
+    "type": {
+      "type": "array",
+      "readOnly": true,
+      "items": {
+        "type": "string"
+      },
+      "contains": { "const": "DataCredential" }
+    },
+    "id": { "type": "string", "format": "uri" },
+    "credentialSchema": {
+      "type": "object",
+      "properties": {
+        "id": { "title": "Credential Schema Identifier", "type": "string", "format": "uri" },
+        "type": { "title": "Credential Schema Type", "const": "JsonSchema" }
+      },
+      "additionalProperties": false,
+      "required": ["id", "type"]
+    },
+    "credentialStatus": {
+      "type": "object",
+      "description": "Revocation supported.",
+      "properties": {
+        "id": { "title": "Credential Status", "type": "string", "format": "uri" },
+        "type": { "type": "string", "const": "BitstringStatusListEntry" },
+        "statusPurpose": { "type": "string", "const": "revocation" },
+        "statusListIndex": { "type": "string" },
+        "statusSize": { "type": "number" },
+        "statusListCredential": { "type": "string", "format": "uri" }
+      },
+      "additionalProperties": false,
+      "required": ["id", "type", "statusPurpose", "statusListIndex", "statusListCredential"]
+    },
+    "validFrom": { "description": "Date from which the credential is to be considered valid.", "type": "string", "format": "date-time" },
+    "issuer": {
+      "title": "Issuer",
+      "description": "The issuer of the credential",
+      "type": "object",
+      "properties": {
+        "id": { "title": "Issuer Identifier", "type": "string", "format": "uri" },
+        "name": { "title": "Issuer Name", "type": "string" }
+      },
+      "required": ["id"],
+      "additionalProperties": false
+    },
+    "credentialSubject": {
+      "type": "object",
+      "properties": {
+        "id": { "title": "Credential Subject ID must be a GS1 Digital Link URI, DID or URI.", "type": "string", "format": "uri" },
+        "sameAs": { "title": "If subject ID is not a GS1 Digital Link URI, this specifies the GS1 Digital Link URI.", "type": "string" },
+        "keyAuthorization": { "title": "Reference to a credential that authorizes the issuer to declare data for the key.", "type": "string" }
+      },
+      "required": ["id"]
+    }
+  },
+  "required": [
+    "@context",
+    "id",
+    "type",
+    "issuer",
+    "validFrom",
+    "credentialSchema",
+    "credentialSubject"
+  ]
+}
+
+
